@@ -1,15 +1,29 @@
+import { ClassNames } from "@emotion/react";
 import PropTypes from "prop-types";
-import styles from "./AddButton.module.css"
+import "./AddButton.scss"
 
 export const AddButton = ({ width, tittle }) => {
 
+
     return (
-        <div className={styles.add__button_wrapper} >
-            <button style={{ width }} className={styles.circle__button} >
-                <p>
-                    {typeof tittle === 'object' ? tittle.text : tittle}
-                </p>
-            </button>
+        <div className="add__button_wrapper" >
+            <ClassNames>
+                {({ css, cx }) => (
+                    <button style={{ width }} className={cx(
+                        'add__button',
+                        
+                        css`
+                        &:hover {
+                            background: #943b00;
+                        }
+                        `
+                    )} >
+                        <p>
+                            {typeof tittle === 'object' ? tittle.text : tittle}
+                        </p>
+                    </button>
+                )}
+            </ClassNames>
         </div>
     )
 }
