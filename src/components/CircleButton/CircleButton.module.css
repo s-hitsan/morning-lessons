@@ -1,15 +1,16 @@
-.add-button-wrapper {
+.circle__button_wrapper {
     margin-top: 100px;
 }
 
-.add-button {
+.circle__button {
     height: 40px;
-    background: #FF6B0A;
+    background: blue;
     border: none;
     text-align: center;
+    border-radius: 50%;
 }
 
-.add-button p{
+.circle__button p{
     color: #FFFFFF;
     font-weight: 700;
     font-size: 14px;

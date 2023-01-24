@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import styles from "./AddButton.module.css"
+import styles from "./CircleButton.module.css"
 
-export const AddButton = ({ width, tittle }) => {
+export const CircleButton = ({ width, tittle }) => {
 
     return (
-        <div className={styles.add__button_wrapper} >
+        <div className={styles.circle__button_wrapper} >
             <button style={{ width }} className={styles.circle__button} >
                 <p>
                     {typeof tittle === 'object' ? tittle.text : tittle}
@@ -14,6 +14,6 @@ export const AddButton = ({ width, tittle }) => {
     )
 }
 
-AddButton.propTypes = {
+CircleButton.propTypes = {
     tittle: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired
 }

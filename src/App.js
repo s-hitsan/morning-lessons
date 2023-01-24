@@ -1,20 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
 import { AddButton } from './components/AddButton/AddButton';
+import { CircleButton } from './components/CircleButton/CircleButton';
 
 function App() {
-  const buttonTitlesArray = ["First Button", "Second", "Thirt"];
+  const buttonsArray = [{
+    tittle: "First Button",
+    width: "312px"
+  }, {
+    tittle: "Second",
+    width: "217px"
+  }, {
+    tittle: "Thirt",
+    width: "261px"
+  }];
 
   return (
     <div className="App">
-      {buttonTitlesArray.map((el) => {
+      {buttonsArray.map((el) => {
         return (
-      <AddButton tittle={el} key={el} />
+          <AddButton tittle={el.tittle} width={el.width} key={el.tittle} />
         )
       })}
+      <AddButton tittle="One button" width="400px" />
+      <CircleButton tittle="It's circle" width="200px"/>
 
     </div>
   );
-} 
+}
 
 export default App;
