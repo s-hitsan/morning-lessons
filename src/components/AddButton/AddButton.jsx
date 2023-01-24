@@ -1,4 +1,4 @@
-import proptypes from "proptypes";
+import PropTypes from "prop-types";
 import "./AddButton.css"
 
 export const AddButton = (props) => {
@@ -16,5 +16,5 @@ export const AddButton = (props) => {
 }
 
 AddButton.propTypes = {
-    tittle: proptypes.oneOf([proptypes.object, proptypes.string])
+    tittle: PropTypes.oneOf([PropTypes.array, PropTypes.string]).isRequired
 }
