@@ -1,0 +1,19 @@
+.add-button-wrapper {
+    margin-top: 100px;
+}
+
+.add-button {
+    height: 40px;
+    background: #FF6B0A;
+    border: none;
+    text-align: center;
+}
+
+.add-button p{
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 14px;
+    text-align: center;
+    margin: auto;
+    padding: 0 20px;
+}
