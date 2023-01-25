@@ -2,16 +2,16 @@ import { ClassNames } from "@emotion/react";
 import PropTypes from "prop-types";
 import "./AddButton.scss"
 
-export const AddButton = ({ width, tittle }) => {
+export const AddButton = ({ width, tittle, onClick }) => {
 
 
     return (
-        <div className="add__button_wrapper" >
+        <div >
             <ClassNames>
                 {({ css, cx }) => (
-                    <button style={{ width }} className={cx(
+                    <button onClick={onClick} style={{ width }} className={cx(
                         'add__button',
-                        
+
                         css`
                         &:hover {
                             background: #943b00;
