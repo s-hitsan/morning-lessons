@@ -1,15 +1,15 @@
 import { ClassNames } from "@emotion/react";
 import PropTypes from "prop-types";
-import "./AddButton.scss"
+import "./AppButton.scss"
 
-export const AddButton = ({ width, tittle, onClick }) => {
+export const AppButton = ({ width, tittle, type = "button", onClick }) => {
 
 
     return (
         <div >
             <ClassNames>
                 {({ css, cx }) => (
-                    <button onClick={onClick} style={{ width }} className={cx(
+                    <button onClick={onClick} type={type} style={{ width }} className={cx(
                         'add__button',
 
                         css`
@@ -28,6 +28,6 @@ export const AddButton = ({ width, tittle, onClick }) => {
     )
 }
 
-AddButton.propTypes = {
+AppButton.propTypes = {
     tittle: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired
 }

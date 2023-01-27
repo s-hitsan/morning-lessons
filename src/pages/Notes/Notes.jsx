@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { AddButton, AppField, NoteItem } from "../../components";
+import { AppButton, AppField, NoteItem } from "../../components";
 
 export class Notes extends Component {
 
@@ -37,7 +37,7 @@ export class Notes extends Component {
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                     <AppField value={this.state.inputValue} onInputChange={this.onInputChange.bind(this)} />
-                    <AddButton onClick={this.onNoteAddButtonClick} tittle='Add note' width='150px' />
+                    <AppButton onClick={this.onNoteAddButtonClick} tittle='Add note' width='150px' />
                 </div>
                 <div style={{ width: '655px' }}>
                     {this.state.notesArray.map((note) => {

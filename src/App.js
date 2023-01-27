@@ -1,12 +1,13 @@
 import './App.css';
-import { Notes } from './pages';
+import { Notes, Registration } from './pages';
 
 function App() {
 
   return (
     <div className="App">
       <div>
-        <Notes />
+        {/* <Notes />*/}
+        <Registration />
       </div>
 
     </div>

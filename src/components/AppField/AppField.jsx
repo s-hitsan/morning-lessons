@@ -8,9 +8,18 @@ export class AppField extends Component {
 
 
     render() {
+
+        const { value, onInputChange, type = 'text', name } = this.props;
+
         return (
             <div className="app__field_wrapper">
-                <input type='text' value={this.props.value} onChange={this.props.onInputChange} placeholder='press' />
+                <input
+                    autoComplete="new-password"
+                    type={type}
+                    name={name}
+                    value={value}
+                    onChange={onInputChange}
+                    placeholder='Enter value' />
             </div>
         )
     }
