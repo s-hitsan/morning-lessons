@@ -1,12 +1,12 @@
 import './App.css';
-import { AddButton, AddNote, AppField } from './components';
+import { Notes } from './pages';
 
 function App() {
 
   return (
     <div className="App">
       <div>
-        <AddNote />
+        <Notes />
       </div>
 
     </div>

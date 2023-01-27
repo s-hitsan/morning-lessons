@@ -1,9 +1,7 @@
 import { Component } from "react";
-import { AddButton } from "../AddButton/AddButton";
-import { AppField } from "../AppField/AppField";
-import { NoteItem } from "./NoteItem";
+import { AddButton, AppField, NoteItem } from "../../components";
 
-export class AddNote extends Component {
+export class Notes extends Component {
 
     state = { notesArray: [{ id: 0, tittle: 'first note', isCecked: false }], inputValue: '', notesLastId: 0 };
 
@@ -41,7 +39,7 @@ export class AddNote extends Component {
                     <AppField value={this.state.inputValue} onInputChange={this.onInputChange.bind(this)} />
                     <AddButton onClick={this.onNoteAddButtonClick} tittle='Add note' width='150px' />
                 </div>
-                <div style={{ width: '655px'}}>
+                <div style={{ width: '655px' }}>
                     {this.state.notesArray.map((note) => {
                         return (
                             <NoteItem onNoteDeleteClick={this.onNoteDeleteClick} onNoteCheckClick={this.onNoteCheckClick} el={note} key={note.id} />
