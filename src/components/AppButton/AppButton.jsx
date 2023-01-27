@@ -1,33 +1,35 @@
-import { ClassNames } from "@emotion/react";
-import PropTypes from "prop-types";
-import "./AppButton.scss"
+import './AppButton.scss';
 
-export const AppButton = ({ width, tittle, type = "button", onClick }) => {
+import { ClassNames } from '@emotion/react';
+import PropTypes from 'prop-types';
 
+export const AppButton = ({ width, tittle, type = 'button', onClick }) => {
+  return (
+    <div>
+      <ClassNames>
+        {({ css, cx }) => (
+          <button
+            onClick={onClick}
+            type={type}
+            style={{ width }}
+            className={cx(
+              'add__button',
 
-    return (
-        <div >
-            <ClassNames>
-                {({ css, cx }) => (
-                    <button onClick={onClick} type={type} style={{ width }} className={cx(
-                        'add__button',
-
-                        css`
-                        &:hover {
-                            background: #943b00;
-                        }
-                        `
-                    )} >
-                        <p>
-                            {typeof tittle === 'object' ? tittle.text : tittle}
-                        </p>
-                    </button>
-                )}
-            </ClassNames>
-        </div>
-    )
-}
+              css`
+                &:hover {
+                  background: #943b00;
+                }
+              `,
+            )}
+          >
+            <p>{typeof tittle === 'object' ? tittle.text : tittle}</p>
+          </button>
+        )}
+      </ClassNames>
+    </div>
+  );
+};
 
 AppButton.propTypes = {
-    tittle: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired
-}
+  tittle: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired,
+};
