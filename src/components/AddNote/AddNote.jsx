@@ -5,16 +5,17 @@ import { NoteItem } from "./NoteItem";
 
 export class AddNote extends Component {
 
-    state = { notesArray: [{ id: 0, tittle: 'first note', isCecked: false }], inputValue: 'initial', notesLastId: 0 };
+    state = { notesArray: [{ id: 0, tittle: 'first note', isCecked: false }], inputValue: '', notesLastId: 0 };
 
     onInputChange(e) {
         this.setState({ inputValue: e.target.value })
     }
 
-    onButtonClick = () => {
+    onNoteAddButtonClick = () => {
         this.setState({
             notesLastId: ++this.state.notesLastId,
-            notesArray: [...this.state.notesArray, { id: this.state.notesLastId, tittle: this.state.inputValue, isCecked: false }]
+            notesArray: [...this.state.notesArray, { id: this.state.notesLastId, tittle: this.state.inputValue, isCecked: false }],
+            inputValue: ''
         });
     }
 
@@ -34,15 +35,13 @@ export class AddNote extends Component {
 
     render() {
 
-        console.log(this.state.notesArray)
-
         return (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                     <AppField value={this.state.inputValue} onInputChange={this.onInputChange.bind(this)} />
-                    <AddButton onClick={this.onButtonClick} tittle='Add note' width='150px' />
+                    <AddButton onClick={this.onNoteAddButtonClick} tittle='Add note' width='150px' />
                 </div>
-                <div style={{ width: '655px' }}>
+                <div style={{ width: '655px'}}>
                     {this.state.notesArray.map((note) => {
                         return (
                             <NoteItem onNoteDeleteClick={this.onNoteDeleteClick} onNoteCheckClick={this.onNoteCheckClick} el={note} key={note.id} />
