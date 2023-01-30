@@ -1,0 +1,19 @@
+@import "src/styles/variables";
+
+.add__button {
+    height: 40px;
+    background: $orange-color;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+
+
+    p {
+        color: #FFFFFF;
+        font-weight: 700;
+        font-size: 14px;
+        text-align: center;
+        margin: auto;
+        padding: 0 20px;
+    }
+}
