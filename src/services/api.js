@@ -8,4 +8,10 @@ export const postApi = {
   async getPosts() {
     return await instance.get('posts');
   },
+  async deletePost(postId) {
+    return await instance.delete(`posts/${postId}`);
+  },
+  async addPost(post) {
+    return await instance.post('posts', post);
+  },
 };

@@ -1,7 +1,9 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { MainLayout } from './components';
 import { ROUTES } from './constants';
@@ -20,6 +22,7 @@ function App() {
           </Routes>
         </MainLayout>
       </BrowserRouter>
+      <ToastContainer position='bottom-right' />
     </div>
   );
 }

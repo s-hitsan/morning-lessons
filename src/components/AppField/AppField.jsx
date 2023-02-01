@@ -1,39 +1,43 @@
 import './AppField.scss';
 
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { Component, useEffect, useRef } from 'react';
 
-export class AppField extends Component {
-  render() {
-    const {
-      value,
-      onInputChange,
-      label,
-      type = 'text',
-      width = '488px',
-      name,
-    } = this.props;
+export const AppField = ({
+  value,
+  onInputChange,
+  label,
+  type = 'text',
+  width = '488px',
+  name,
+}) => {
+  const element = useRef({});
 
-    return (
-      <div className='app__field_wrapper'>
-        {label ? (
-          <label title='hello'>
-            <p>{label}</p>
-          </label>
-        ) : null}
-        <input
-          style={{ width: width }}
-          autoComplete='new-password'
-          type={type}
-          name={name}
-          value={value}
-          onChange={onInputChange}
-          placeholder='Enter value'
-        />
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    element?.current?.focus();
+  }, [value]);
+
+  return (
+    <div className='app__field_wrapper'>
+      {label ? (
+        <label title='hello'>
+          <p>{label}</p>
+        </label>
+      ) : null}
+      <input
+        ref={element}
+        autoFocus={true}
+        style={{ width: width }}
+        autoComplete='new-password'
+        type={type}
+        name={name}
+        value={value}
+        onChange={onInputChange}
+        placeholder='Enter value'
+      />
+    </div>
+  );
+};
 
 AppField.propTypes = {
   label: PropTypes.string,

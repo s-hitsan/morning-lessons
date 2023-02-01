@@ -1,0 +1,27 @@
+.note__item_wrapper {
+    height: 48px;
+    width: 488px;
+    margin-left: 5px;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+
+    padding: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    >p {
+        margin-top: auto;
+    }
+
+    svg {
+        cursor: pointer;
+    }
+
+    >div {
+        display: flex;
+        gap: 10px
+    }
+}
