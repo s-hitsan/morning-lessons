@@ -4,8 +4,11 @@ import { DeleteIcon } from '../Icons';
 
 export const PostItem = ({ post, onPostDeleteClick }) => {
   return (
-    <div className='note__item_wrapper'>
-      <p>{post.title}</p>
+    <div className='post__item_wrapper'>
+      <div className='post__item_info'>
+        <p>{post.title}</p>
+        <p>{post.content}</p>
+      </div>
       <div>
         <div onClick={() => onPostDeleteClick(post.id)}>
           <DeleteIcon />

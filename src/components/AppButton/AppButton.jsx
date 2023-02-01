@@ -3,12 +3,13 @@ import './AppButton.scss';
 import { ClassNames } from '@emotion/react';
 import PropTypes from 'prop-types';
 
-export const AppButton = ({ width, tittle, type = 'button', onClick }) => {
+export const AppButton = ({ width, tittle, isDisabled, type = 'button', onClick }) => {
   return (
     <div>
       <ClassNames>
         {({ css, cx }) => (
           <button
+            disabled={isDisabled}
             onClick={onClick}
             type={type}
             style={{ width }}

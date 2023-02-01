@@ -1,3 +1,4 @@
+import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -7,13 +8,7 @@ import { postApi } from '../../services/api';
 export const Posts = () => {
   const [postsData, setPostsData] = useState({});
 
-  const [inputValue, setInputValue] = useState('');
-
   const [isPostsDataloading, setisPostsDataloading] = useState(true);
-
-  const handleSetInputValue = (event) => {
-    setInputValue(event.target.value);
-  };
 
   useEffect(() => {
     const getPostsRequest = async () => {
@@ -42,15 +37,14 @@ export const Posts = () => {
     }
   };
 
-  const handleAddPost = async () => {
+  const handleAddPost = async (values) => {
     const addPostResponse = await postApi.addPost({
-      title: inputValue,
-      content: 'string',
+      title: values.title,
+      content: values.content,
       image: 'string',
       preview_image: 'string',
     });
     if (addPostResponse?.status === 200) {
-      setInputValue('');
       setPostsData((prevState) => {
         return {
           ...prevState,
@@ -62,10 +56,31 @@ export const Posts = () => {
     }
   };
 
+  const initialValues = {
+    title: '',
+    content: '',
+  };
+
   return (
     <div className='d-flex justify-content-center flex-column  align-items-center'>
-      <AppField value={inputValue} onInputChange={handleSetInputValue} />
-      <AppButton onClick={handleAddPost} tittle='Add note' width='150px' />
+      <Formik onSubmit={handleAddPost} initialValues={initialValues}>
+        {({ values, handleChange, handleSubmit, isSubmitting }) => (
+          <form onSubmit={handleSubmit}>
+            <AppField value={values.title} name='title' onInputChange={handleChange} />
+            <AppField
+              value={values.content}
+              name='content'
+              onInputChange={handleChange}
+            />
+            <AppButton
+              type='submit'
+              isDisabled={isSubmitting}
+              tittle={isSubmitting ? 'Loading...' : 'Add note'}
+              width='150px'
+            />
+          </form>
+        )}
+      </Formik>
       {isPostsDataloading ? (
         <p>is Loading....</p>
       ) : (

@@ -1,5 +1,5 @@
-.note__item_wrapper {
-    height: 48px;
+.post__item_wrapper {
+    height: 100px;
     width: 488px;
     margin-left: 5px;
     border-radius: 3px;
@@ -11,6 +11,12 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+
+    .post__item_info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
 
     >p {
         margin-top: auto;
