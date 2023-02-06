@@ -7,7 +7,7 @@ export const PostItem = ({ post, onPostDeleteClick }) => {
     <div className='post__item_wrapper'>
       <div className='post__item_info'>
         <p>{post.title}</p>
-        <p>{post.content}</p>
+        <p className='post__item_content'>{post.content}</p>
       </div>
       <div>
         <div onClick={() => onPostDeleteClick(post.id)}>

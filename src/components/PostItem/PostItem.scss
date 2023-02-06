@@ -1,5 +1,5 @@
 .post__item_wrapper {
-    height: 100px;
+    height: 150px;
     width: 488px;
     margin-left: 5px;
     border-radius: 3px;
@@ -13,13 +13,19 @@
     margin-bottom: 10px;
 
     .post__item_info {
+        height: inherit;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+
+        .post__item_content {
+            overflow: auto;
+        }
     }
 
     >p {
         margin-top: auto;
+        overflow: hidden;
     }
 
     svg {

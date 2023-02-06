@@ -1,93 +1,73 @@
-import Rect, { Component } from 'react';
+import { Formik } from 'formik';
+import Rect, { Component, useState } from 'react';
 
 import { AppButton, AppField, AppModal } from '../../components';
+import { useUserContext } from '../../contexts/userContext';
 
-export class Registration extends Component {
-  state = {
-    formValues: {
-      email: '',
-      login: '',
-      password: '',
-      modalInputValue: '',
-    },
-    isModalShow: false,
+export const Registration = () => {
+  const [isModalShow, setIsModalShow] = useState();
+
+  const { logIn } = useUserContext();
+
+  const formValues = {
+    email: '',
+    login: '',
+    password: '',
+    modalInputValue: '',
   };
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState((prevState) => ({
-      formValues: { ...prevState.formValues, [name]: value },
-    }));
-  };
-  setModalShow = () => {
-    this.setState(() => ({
-      isModalShow: true,
-    }));
+  const onSubmit = async (event) => {
+    await logIn();
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.setModalShow();
-    console.log(this.state.formValues);
-  };
-
-  setModalHide = () => {
-    this.setState(() => ({
-      isModalShow: false,
-    }));
-  };
-
-  render() {
-    const {
-      state: { formValues, isModalShow },
-      handleChange,
-      handleSubmit,
-      setModalShow,
-      setModalHide,
-    } = this;
-
-    return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          gap: '10px',
-        }}
-      >
-        <h1>Create account</h1>
-        <form autoComplete='none' onSubmit={handleSubmit}>
-          <AppField
-            label='Email'
-            value={formValues.email}
-            onInputChange={handleChange}
-            name='email'
-          />
-          <AppField
-            label='Login'
-            value={formValues.login}
-            onInputChange={handleChange}
-            name='login'
-          />
-          <AppField
-            label='Password'
-            value={formValues.password}
-            onInputChange={handleChange}
-            name='password'
-            type='password'
-          />
-          <AppButton type='submit' tittle='Registartion' />
-        </form>
-        {isModalShow ? (
-          <AppModal
-            isShow={isModalShow}
-            inputValue={formValues.modalInputValue}
-            onInputChange={handleChange}
-            onHide={setModalHide}
-          />
-        ) : null}
-      </div>
-    );
-  }
-}
+  return (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        gap: '10px',
+      }}
+    >
+      <h1>Create account</h1>
+      <Formik initialValues={formValues} onSubmit={onSubmit}>
+        {({ handleSubmit, handleChange, values, isSubmitting }) => (
+          <form autoComplete='none' onSubmit={handleSubmit}>
+            <AppField
+              label='Email'
+              value={values.email}
+              onInputChange={handleChange}
+              name='email'
+            />
+            <AppField
+              label='Login'
+              value={values.login}
+              onInputChange={handleChange}
+              name='login'
+            />
+            <AppField
+              label='Password'
+              value={values.password}
+              onInputChange={handleChange}
+              name='password'
+              type='password'
+            />
+            <AppButton
+              type='submit'
+              tittle={isSubmitting ? 'Loading...' : 'Registartion'}
+            />
+          </form>
+        )}
+      </Formik>
+      {/* {isModalShow ? (
+        <AppModal
+          isShow={isModalShow}
+          inputValue={formValues.modalInputValue}
+          onInputChange={handleChange}
+          onHide={setModalHide}
+        />
+      ) : null} */}
+    </div>
+  );
+};

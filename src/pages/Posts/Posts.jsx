@@ -3,22 +3,26 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { AppButton, AppField, PostItem } from '../../components';
+import { useDebounce } from '../../hooks/useDebounce';
 import { postApi } from '../../services/api';
 
 export const Posts = () => {
   const [postsData, setPostsData] = useState({});
 
+  const { searchValue, setSearchValue, debouncedValue } = useDebounce('');
+
   const [isPostsDataloading, setisPostsDataloading] = useState(true);
 
+  const getPostsRequest = async (searchString) => {
+    setisPostsDataloading(true);
+    const response = await postApi.getPosts(searchString);
+    setisPostsDataloading(false);
+    setPostsData(response?.data);
+  };
+
   useEffect(() => {
-    const getPostsRequest = async () => {
-      setisPostsDataloading(true);
-      const response = await postApi.getPosts();
-      setisPostsDataloading(false);
-      setPostsData(response?.data);
-    };
-    getPostsRequest();
-  }, []);
+    getPostsRequest(debouncedValue);
+  }, [debouncedValue]);
 
   const handleDeletePost = async (postId) => {
     const deletePostResponse = await postApi.deletePost(postId);
@@ -63,6 +67,14 @@ export const Posts = () => {
 
   return (
     <div className='d-flex justify-content-center flex-column  align-items-center'>
+      <div>
+        <AppField
+          value={searchValue}
+          onInputChange={setSearchValue}
+          label='Search posts'
+        />
+        <div className='divider' />
+      </div>
       <Formik onSubmit={handleAddPost} initialValues={initialValues}>
         {({ values, handleChange, handleSubmit, isSubmitting }) => (
           <form onSubmit={handleSubmit}>

@@ -5,8 +5,8 @@ const instance = axios.create({
 });
 
 export const postApi = {
-  async getPosts() {
-    return await instance.get('posts');
+  async getPosts(searchString = '') {
+    return await instance.get(`posts?search=${searchString}`);
   },
   async deletePost(postId) {
     return await instance.delete(`posts/${postId}`);

@@ -13,10 +13,6 @@ export const AppField = ({
 }) => {
   const element = useRef({});
 
-  useEffect(() => {
-    element?.current?.focus();
-  }, [value]);
-
   return (
     <div className='app__field_wrapper'>
       {label ? (
@@ -26,7 +22,6 @@ export const AppField = ({
       ) : null}
       <input
         ref={element}
-        autoFocus={true}
         style={{ width: width }}
         autoComplete='new-password'
         type={type}
