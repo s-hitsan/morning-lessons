@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
+import { MainLayout } from './components';
 import { UserProvider } from './contexts/userContext';
 import { Navigation } from './navigation';
 
@@ -13,7 +14,9 @@ function App() {
     <div className='App'>
       <BrowserRouter>
         <UserProvider>
-          <Navigation />
+          <MainLayout>
+            <Navigation />
+          </MainLayout>
         </UserProvider>
       </BrowserRouter>
       <ToastContainer position='bottom-right' />

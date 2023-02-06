@@ -10,6 +10,7 @@ export const AppField = ({
   type = 'text',
   width = '488px',
   name,
+  placeholder = 'Enter value',
 }) => {
   const element = useRef({});
 
@@ -28,7 +29,7 @@ export const AppField = ({
         name={name}
         value={value}
         onChange={onInputChange}
-        placeholder='Enter value'
+        placeholder={placeholder}
       />
     </div>
   );

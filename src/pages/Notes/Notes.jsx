@@ -44,9 +44,6 @@ export class Notes extends Component {
     return (
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
           flexDirection: 'column',
           gap: '10px',
         }}

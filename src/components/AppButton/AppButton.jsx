@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 export const AppButton = ({ width, tittle, isDisabled, type = 'button', onClick }) => {
   return (
-    <div>
+    <div className='app__button_wrapper'>
       <ClassNames>
         {({ css, cx }) => (
           <button

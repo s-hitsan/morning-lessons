@@ -6,7 +6,7 @@ const UserContext = createContext();
 export const useUserContext = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [username, setUsername] = useState(null);
   const [isLoginLoading, setisLoginLoading] = useState(false);
 

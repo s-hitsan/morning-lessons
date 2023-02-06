@@ -66,15 +66,7 @@ export const Posts = () => {
   };
 
   return (
-    <div className='d-flex justify-content-center flex-column  align-items-center'>
-      <div>
-        <AppField
-          value={searchValue}
-          onInputChange={setSearchValue}
-          label='Search posts'
-        />
-        <div className='divider' />
-      </div>
+    <div className='flex-column'>
       <Formik onSubmit={handleAddPost} initialValues={initialValues}>
         {({ values, handleChange, handleSubmit, isSubmitting }) => (
           <form onSubmit={handleSubmit}>
@@ -93,6 +85,14 @@ export const Posts = () => {
           </form>
         )}
       </Formik>
+      <div>
+        <div className='divider' />
+        <AppField
+          value={searchValue}
+          onInputChange={setSearchValue}
+          placeholder='Search posts...'
+        />
+      </div>
       {isPostsDataloading ? (
         <p>is Loading....</p>
       ) : (
