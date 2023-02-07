@@ -2,17 +2,14 @@ import { AuthGuard, NoAuthGuard } from '../components';
 import { PATHS } from '../constants';
 import { MyPage, Notes, Post, Posts, Registration } from '../pages';
 
-const routeConstructor = (path, element) => {
-  return { path, element };
+const routeConstructor = (path, element, children = []) => {
+  return { path, element, children };
 };
 
 export const pagesArray = [
-  routeConstructor(
-    PATHS.register,
-    <NoAuthGuard>
-      <Registration />
-    </NoAuthGuard>,
-  ),
+  routeConstructor(PATHS.register, <Registration />, [
+    { path: 'hi', element: <div>inner page</div> },
+  ]),
   routeConstructor(
     PATHS.notes,
     <AuthGuard>

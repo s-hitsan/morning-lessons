@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import Rect, { Component, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 import { AppButton, AppField, AppModal } from '../../components';
 import { useUserContext } from '../../contexts/userContext';
@@ -68,6 +69,7 @@ export const Registration = () => {
           onHide={setModalHide}
         />
       ) : null} */}
+      <Outlet />
     </div>
   );
 };
