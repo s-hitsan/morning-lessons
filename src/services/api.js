@@ -8,6 +8,9 @@ export const postApi = {
   async getPosts(searchString = '') {
     return await instance.get(`posts?search=${searchString}`);
   },
+  async getPost(id) {
+    return await instance.get(`posts/${id}`);
+  },
   async deletePost(postId) {
     return await instance.delete(`posts/${postId}`);
   },

@@ -1,5 +1,5 @@
 .post__item_wrapper {
-    height: 150px;
+    height: 70px;
     width: 488px;
     margin-left: 5px;
     border-radius: 3px;
@@ -17,7 +17,8 @@
         height: inherit;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        align-items: center;
+        justify-content: center;
 
         .post__item_content {
             overflow: auto;

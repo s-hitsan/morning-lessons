@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { AppButton, AppField, PostItem } from '../../components';
@@ -13,16 +14,21 @@ export const Posts = () => {
 
   const [isPostsDataloading, setisPostsDataloading] = useState(true);
 
+  const navigate = useNavigate();
+  console.log(navigate);
+
+  useEffect(() => {
+    getPostsRequest(debouncedValue);
+  }, [debouncedValue]);
+
+  const handlePostClick = (postId) => navigate(`/post/${postId}`);
+
   const getPostsRequest = async (searchString) => {
     setisPostsDataloading(true);
     const response = await postApi.getPosts(searchString);
     setisPostsDataloading(false);
     setPostsData(response?.data);
   };
-
-  useEffect(() => {
-    getPostsRequest(debouncedValue);
-  }, [debouncedValue]);
 
   const handleDeletePost = async (postId) => {
     const deletePostResponse = await postApi.deletePost(postId);
@@ -103,6 +109,7 @@ export const Posts = () => {
               return (
                 <PostItem
                   onPostDeleteClick={handleDeletePost}
+                  handlePostClick={handlePostClick}
                   key={post?.id}
                   post={post}
                 />

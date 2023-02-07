@@ -7,9 +7,13 @@ const routeConstructor = (path, element, children = []) => {
 };
 
 export const pagesArray = [
-  routeConstructor(PATHS.register, <Registration />, [
-    { path: 'hi', element: <div>inner page</div> },
-  ]),
+  routeConstructor(
+    PATHS.register,
+    <NoAuthGuard>
+      <Registration />
+    </NoAuthGuard>,
+    [{ path: 'hi', element: <div>inner page</div> }],
+  ),
   routeConstructor(
     PATHS.notes,
     <AuthGuard>

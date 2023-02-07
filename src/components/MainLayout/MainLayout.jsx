@@ -13,7 +13,15 @@ const StyledDiv = styled.div`
 
 export const MainLayout = ({ children }) => {
   return (
-    <div>
+    <div
+      style={{
+        maxWidth: '1280px',
+        minHeight: '100vh',
+        margin: '0 auto',
+        paddingTop: '50px',
+        backgroundColor: '#eef9fd',
+      }}
+    >
       <NavMenu />
       <StyledDiv>{children}</StyledDiv>
     </div>

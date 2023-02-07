@@ -7,3 +7,4 @@ export * from './MainLayout/MainLayout';
 export * from './NoAuthGuard/NoAuthGuard';
 export * from './NoteItem/NoteItem';
 export * from './PostItem/PostItem';
+export * from './RequestHandler/RequestHandler';
