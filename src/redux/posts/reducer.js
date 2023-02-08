@@ -16,6 +16,6 @@ export const postsReducer = (state = initialState, action) => {
   }
 };
 
-const postsAction = (payload) => {
+export const postsAction = (payload) => {
   return { type: 'SET_POSTS_DATA', payload };
 };

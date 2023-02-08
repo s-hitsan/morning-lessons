@@ -6,19 +6,15 @@ import { toast } from 'react-toastify';
 
 import { AppButton, AppField, PostItem } from '../../components';
 import { useDebounce } from '../../hooks/useDebounce';
-import { setPostsData } from '../../redux/posts/reducer';
+import { postsAction } from '../../redux/posts/reducer';
 import { postApi } from '../../services/api';
 
 const Posts = ({ postsData, setPostsData }) => {
-  console.log(setPostsData);
-  console.log(postsData);
-
   const { searchValue, setSearchValue, debouncedValue } = useDebounce('');
 
   const [isPostsDataloading, setisPostsDataloading] = useState(true);
 
   const navigate = useNavigate();
-  console.log(navigate);
 
   useEffect(() => {
     getPostsRequest(debouncedValue);
@@ -37,14 +33,11 @@ const Posts = ({ postsData, setPostsData }) => {
     const deletePostResponse = await postApi.deletePost(postId);
     console.log(deletePostResponse);
     if (deletePostResponse?.status === 204) {
-      setPostsData((prevState) => {
-        return {
-          ...prevState,
-          total_items: --prevState.total_items,
-          data: prevState?.data?.filter((post) => {
-            return +post?.id !== +postId;
-          }),
-        };
+      setPostsData({
+        total_items: --postsData.total_items,
+        data: postsData?.data?.filter((post) => {
+          return +post?.id !== +postId;
+        }),
       });
       toast.success('Post deleted successful!');
     }
@@ -58,12 +51,9 @@ const Posts = ({ postsData, setPostsData }) => {
       preview_image: 'string',
     });
     if (addPostResponse?.status === 200) {
-      setPostsData((prevState) => {
-        return {
-          ...prevState,
-          total_items: ++prevState.total_items,
-          data: [addPostResponse?.data, ...prevState.data],
-        };
+      setPostsData({
+        total_items: ++postsData.total_items,
+        data: [addPostResponse?.data, ...postsData.data],
       });
       toast.success('Post added successful!');
     }
@@ -130,7 +120,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {setPostsData: (payload)=> dispatch(setPostsData(payload))},
+  return { setPostsData: (payload) => dispatch(postsAction(payload)) };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);
