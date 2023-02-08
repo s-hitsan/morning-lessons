@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -9,7 +9,13 @@ import { useDebounce } from '../../hooks/useDebounce';
 import { postsAction } from '../../redux/posts/reducer';
 import { postApi } from '../../services/api';
 
-const Posts = ({ postsData, setPostsData }) => {
+export const Posts = () => {
+  const postsData = useSelector((state) => state.postsPage);
+
+  const dispatch = useDispatch();
+
+  const setPostsData = (payload) => dispatch(postsAction(payload));
+
   const { searchValue, setSearchValue, debouncedValue } = useDebounce('');
 
   const [isPostsDataloading, setisPostsDataloading] = useState(true);
@@ -114,13 +120,3 @@ const Posts = ({ postsData, setPostsData }) => {
     </div>
   );
 };
-
-const mapStateToProps = (state) => {
-  return { postsData: state.postsPage };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return { setPostsData: (payload) => dispatch(postsAction(payload)) };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Posts);

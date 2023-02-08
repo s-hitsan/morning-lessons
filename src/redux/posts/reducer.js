@@ -4,6 +4,7 @@ const initialState = {
 };
 
 export const postsReducer = (state = initialState, action) => {
+  console.log(action);
   switch (action.type) {
     case 'SET_POSTS_DATA':
       return {
