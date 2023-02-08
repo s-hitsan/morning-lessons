@@ -1,6 +1,10 @@
+import { lazy, Suspense } from 'react';
+
 import { AuthGuard, NoAuthGuard } from '../components';
 import { PATHS } from '../constants';
-import { MyPage, Notes, Post, Posts, Registration } from '../pages';
+import { MyPage, Notes, Posts, Registration } from '../pages';
+
+const LazyPost = lazy(() => import('../pages/Post/Post'));
 
 const routeConstructor = (path, element, children = []) => {
   return { path, element, children };
@@ -28,9 +32,9 @@ export const pagesArray = [
   ),
   routeConstructor(
     PATHS.post,
-    <AuthGuard>
-      <Post />
-    </AuthGuard>,
+    <Suspense fallback={<div>Loading...</div>}>
+      <LazyPost />
+    </Suspense>,
   ),
   routeConstructor(
     PATHS.myPage,

@@ -72,3 +72,5 @@ export const Post = () => {
     </RequestHandler>
   );
 };
+
+export default Post;
