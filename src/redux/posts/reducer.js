@@ -1,5 +1,5 @@
 const initialState = {
-  postsList: [],
+  data: [],
   total_items: 10,
 };
 
@@ -8,7 +8,7 @@ export const postsReducer = (state = initialState, action) => {
     case 'SET_POSTS_DATA':
       return {
         ...state,
-        postsList: action.payload.postsList,
+        data: action.payload.data,
         total_items: action.payload.total_items,
       };
     default:
