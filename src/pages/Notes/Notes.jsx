@@ -1,84 +1,55 @@
-import { Component } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { AppButton, AppField, NoteItem } from '../../components';
+import { addNoteAction, deleteNoteAction } from '../../redux/notes/actions';
 
-export class Notes extends Component {
-  state = {
-    notesArray: [{ id: 0, tittle: 'first note', isCecked: false }],
-    inputValue: '',
-    notesLastId: 0,
+export const Notes = () => {
+  const [inputValue, setInputValue] = useState('');
+
+  const { notes } = useSelector((state) => state.notesPage);
+
+  const dispatch = useDispatch();
+
+  const onNoteAddButtonClick = () => {
+    dispatch(addNoteAction({ tittle: inputValue }));
+    setInputValue('');
   };
 
-  onInputChange(e) {
-    this.setState({ inputValue: e.target.value });
-  }
+  const onNoteDeleteClick = (id) => dispatch(deleteNoteAction({ id }));
 
-  onNoteAddButtonClick = () => {
-    this.setState({
-      notesLastId: ++this.state.notesLastId,
-      notesArray: [
-        ...this.state.notesArray,
-        { id: this.state.notesLastId, tittle: this.state.inputValue, isCecked: false },
-      ],
-      inputValue: '',
-    });
-  };
+  const handleInputChange = (e) => setInputValue(e.target.value);
 
-  onNoteCheckClick = (elId) =>
-    this.setState({
-      notesArray: this.state.notesArray.map((note) => {
-        if (note.id === elId) {
-          return { ...note, isCecked: !note.isCecked };
-        } else {
-          return note;
-        }
-      }),
-    });
-
-  onNoteDeleteClick = (elId) =>
-    this.setState({
-      notesArray: this.state.notesArray.filter((note) => note.id !== elId),
-    });
-
-  render() {
-    return (
+  return (
+    <div
+      style={{
+        flexDirection: 'column',
+        gap: '10px',
+      }}
+    >
       <div
         style={{
-          flexDirection: 'column',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
           gap: '10px',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '10px',
-          }}
-        >
-          <AppField
-            value={this.state.inputValue}
-            onInputChange={this.onInputChange.bind(this)}
-          />
-          <AppButton
-            onClick={this.onNoteAddButtonClick}
-            tittle='Add note'
-            width='150px'
-          />
-        </div>
-        <div style={{ width: '655px' }}>
-          {this.state.notesArray.map((note) => {
-            return (
-              <NoteItem
-                onNoteDeleteClick={this.onNoteDeleteClick}
-                onNoteCheckClick={this.onNoteCheckClick}
-                el={note}
-                key={note.id}
-              />
-            );
-          })}
-        </div>
+        <AppField value={inputValue} onInputChange={handleInputChange} />
+        <AppButton onClick={onNoteAddButtonClick} tittle='Add note' width='150px' />
       </div>
-    );
-  }
-}
+      <div style={{ width: '655px' }}>
+        {notes?.map((note) => {
+          return (
+            <NoteItem
+              onNoteDeleteClick={onNoteDeleteClick}
+              onNoteCheckClick={() => {}}
+              el={note}
+              key={note.id}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+};

@@ -1,3 +1,5 @@
+import { SET_POSTS_DATA } from './constants';
+
 const initialState = {
   data: [],
   total_items: 10,
@@ -6,7 +8,7 @@ const initialState = {
 export const postsReducer = (state = initialState, action) => {
   console.log(action);
   switch (action.type) {
-    case 'SET_POSTS_DATA':
+    case SET_POSTS_DATA:
       return {
         ...state,
         data: action.payload.data,
@@ -15,8 +17,4 @@ export const postsReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
-
-export const postsAction = (payload) => {
-  return { type: 'SET_POSTS_DATA', payload };
 };
