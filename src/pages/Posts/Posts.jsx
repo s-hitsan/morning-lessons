@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import { AppButton, AppField, PostItem } from '../../components';
 import { useDebounce } from '../../hooks/useDebounce';
-import { setPostsData as setPostsDataAction } from '../../redux/posts/reducer';
+import { setPostsData as setPostsDataAction } from '../../redux/post-slice';
 import { postApi } from '../../services/api';
 
 export const Posts = () => {

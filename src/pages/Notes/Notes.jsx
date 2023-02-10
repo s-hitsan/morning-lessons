@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AppButton, AppField, NoteItem } from '../../components';
-import { addNoteAction, deleteNoteAction } from '../../redux/notes/actions';
+import {
+  addNote as addNoteAction,
+  deleteNote as deleteNoteAction,
+} from '../../redux/notes-slice';
 
 export const Notes = () => {
   const [inputValue, setInputValue] = useState('');

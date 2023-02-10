@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { notesReducer } from './notes/reducer';
-import postsReducer from './posts/reducer';
+import notesReducer from './notes-slice';
+import postsReducer from './post-slice';
 
 const rootReducer = {
   postsPage: postsReducer,
