@@ -1,14 +1,11 @@
-import { devToolsEnhancer } from '@redux-devtools/extension';
-import { combineReducers, createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 import { notesReducer } from './notes/reducer';
 import { postsReducer } from './posts/reducer';
 
-const rootReducer = combineReducers({
+const rootReducer = {
   postsPage: postsReducer,
   notesPage: notesReducer,
-});
+};
 
-const enhancer = devToolsEnhancer();
-
-export const store = createStore(rootReducer, enhancer);
+export const store = configureStore({ reducer: rootReducer });

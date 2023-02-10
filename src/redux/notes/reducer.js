@@ -1,3 +1,5 @@
+import { createReducer } from '@reduxjs/toolkit';
+
 import { ADD_NOTE, DELETE_NOTE } from './constants';
 
 const initialState = {
@@ -6,24 +8,17 @@ const initialState = {
   notesLastId: 1,
 };
 
-export const notesReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_NOTE:
-      return {
-        ...state,
-        notes: [
-          ...state.notes,
-          { tittle: action.payload.tittle, id: state.notesLastId, isCheked: false },
-        ],
-        notesLastId: ++state.notesLastId,
-        total_items: ++state.total_items,
-      };
-    case DELETE_NOTE:
-      return {
-        ...state,
-        notes: state.notes.filter((note) => note.id !== action.payload.id),
-      };
-    default:
-      return state;
-  }
-};
+export const notesReducer = createReducer(initialState, {
+  [ADD_NOTE]: (state, action) => {
+    state.notes.push({
+      tittle: action.payload.tittle,
+      id: state.notesLastId,
+      isCheked: false,
+    });
+    ++state.notesLastId;
+    ++state.total_items;
+  },
+  [DELETE_NOTE]: (state, action) => {
+    state.notes.filter((note) => note.id !== action.payload.id);
+  },
+});

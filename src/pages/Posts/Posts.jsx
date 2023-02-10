@@ -1,12 +1,12 @@
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { AppButton, AppField, PostItem } from '../../components';
 import { useDebounce } from '../../hooks/useDebounce';
-import { postsAction } from '../../redux/posts/actions';
+import { postsActionCreator } from '../../redux/posts/actions';
 import { postApi } from '../../services/api';
 
 export const Posts = () => {
@@ -14,7 +14,7 @@ export const Posts = () => {
 
   const dispatch = useDispatch();
 
-  const setPostsData = (payload) => dispatch(postsAction(payload));
+  const setPostsData = (payload) => dispatch(postsActionCreator(payload));
 
   const { searchValue, setSearchValue, debouncedValue } = useDebounce('');
 
@@ -40,7 +40,6 @@ export const Posts = () => {
     console.log(deletePostResponse);
     if (deletePostResponse?.status === 204) {
       setPostsData({
-        total_items: --postsData.total_items,
         data: postsData?.data?.filter((post) => {
           return +post?.id !== +postId;
         }),
@@ -58,7 +57,6 @@ export const Posts = () => {
     });
     if (addPostResponse?.status === 200) {
       setPostsData({
-        total_items: ++postsData.total_items,
         data: [addPostResponse?.data, ...postsData.data],
       });
       toast.success('Post added successful!');
