@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import { AppButton, AppField, PostItem } from '../../components';
 import { useDebounce } from '../../hooks/useDebounce';
-import { postsActionCreator } from '../../redux/posts/actions';
+import { setPostsData as setPostsDataAction } from '../../redux/posts/reducer';
 import { postApi } from '../../services/api';
 
 export const Posts = () => {
@@ -14,7 +14,7 @@ export const Posts = () => {
 
   const dispatch = useDispatch();
 
-  const setPostsData = (payload) => dispatch(postsActionCreator(payload));
+  const setPostsData = (payload) => dispatch(setPostsDataAction(payload));
 
   const { searchValue, setSearchValue, debouncedValue } = useDebounce('');
 
