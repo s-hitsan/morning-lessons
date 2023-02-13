@@ -1,52 +1,37 @@
 import { Formik } from 'formik';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { AppButton, AppField, PostItem, RequestHandler } from '../../components';
 import { useDebounce } from '../../hooks/useDebounce';
-import { getPosts } from '../../redux/operations';
-import { addPost } from '../../redux/post-slice';
-import { postApi } from '../../services/api';
+import { useAddPostMutation, useGetPostsQuery } from '../../services/rtk-api';
 
 export const Posts = () => {
-  const {
-    data: postsArray,
-    isGetPostsLoading,
-    total_items,
-    isAddPostLoading,
-  } = useSelector((state) => state.postsPage);
+  const { data: getPostsData, isLoading: isGetPostsLoading } = useGetPostsQuery();
 
-  const dispatch = useDispatch();
-
-  const setPostsData = (payload) => dispatch();
+  const [addPost, { data, isLoading: isAddPostLoading }] = useAddPostMutation();
 
   const { searchValue, setSearchValue, debouncedValue } = useDebounce('');
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(getPosts(debouncedValue));
-  }, [debouncedValue]);
-
   const handlePostClick = (postId) => navigate(`/post/${postId}`);
 
   const handleDeletePost = async (postId) => {
-    const deletePostResponse = await postApi.deletePost(postId);
-    console.log(deletePostResponse);
-    if (deletePostResponse?.status === 204) {
-      setPostsData({
-        data: postsArray?.filter((post) => {
-          return +post?.id !== +postId;
-        }),
-      });
-      toast.success('Post deleted successful!');
-    }
+    // const deletePostResponse = await postApi.deletePost(postId);
+    // console.log(deletePostResponse);
+    // if (deletePostResponse?.status === 204) {
+    //   setPostsData({
+    //     data: postsArray?.filter((post) => {
+    //       return +post?.id !== +postId;
+    //     }),
+    //   });
+    //   toast.success('Post deleted successful!');
+    // }
   };
 
   const handleAddPost = (values) => {
-    dispatch(addPost({ title: values.title, content: values.content }));
+    addPost({ title: values.title, content: values.content });
   };
 
   const initialValues = {
@@ -84,9 +69,9 @@ export const Posts = () => {
       </div>
       <RequestHandler isLoading={isGetPostsLoading}>
         <div>
-          <p>{` total items: ${total_items}`}</p>
+          <p>{` total items: ${getPostsData?.total_items}`}</p>
           <div>
-            {postsArray?.map((post) => {
+            {getPostsData?.data?.map((post) => {
               return (
                 <PostItem
                   onPostDeleteClick={handleDeletePost}
