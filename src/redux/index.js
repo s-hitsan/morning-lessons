@@ -4,8 +4,8 @@ import notesReducer from './notes-slice';
 import postsReducer from './post-slice';
 
 const rootReducer = {
-  postsPage: postsReducer,
   notesPage: notesReducer,
+  postsPage: postsReducer,
 };
 
 export const store = configureStore({ reducer: rootReducer });

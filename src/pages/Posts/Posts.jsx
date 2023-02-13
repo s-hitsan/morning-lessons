@@ -4,43 +4,40 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { AppButton, AppField, PostItem } from '../../components';
+import { AppButton, AppField, PostItem, RequestHandler } from '../../components';
 import { useDebounce } from '../../hooks/useDebounce';
-import { setPostsData as setPostsDataAction } from '../../redux/post-slice';
+import { getPosts } from '../../redux/operations';
+import { addPost } from '../../redux/post-slice';
 import { postApi } from '../../services/api';
 
 export const Posts = () => {
-  const postsData = useSelector((state) => state.postsPage);
+  const {
+    data: postsArray,
+    isGetPostsLoading,
+    total_items,
+    isAddPostLoading,
+  } = useSelector((state) => state.postsPage);
 
   const dispatch = useDispatch();
 
-  const setPostsData = (payload) => dispatch(setPostsDataAction(payload));
+  const setPostsData = (payload) => dispatch();
 
   const { searchValue, setSearchValue, debouncedValue } = useDebounce('');
-
-  const [isPostsDataloading, setisPostsDataloading] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    getPostsRequest(debouncedValue);
+    dispatch(getPosts(debouncedValue));
   }, [debouncedValue]);
 
   const handlePostClick = (postId) => navigate(`/post/${postId}`);
-
-  const getPostsRequest = async (searchString) => {
-    setisPostsDataloading(true);
-    const response = await postApi.getPosts(searchString);
-    setisPostsDataloading(false);
-    setPostsData(response?.data);
-  };
 
   const handleDeletePost = async (postId) => {
     const deletePostResponse = await postApi.deletePost(postId);
     console.log(deletePostResponse);
     if (deletePostResponse?.status === 204) {
       setPostsData({
-        data: postsData?.data?.filter((post) => {
+        data: postsArray?.filter((post) => {
           return +post?.id !== +postId;
         }),
       });
@@ -48,19 +45,8 @@ export const Posts = () => {
     }
   };
 
-  const handleAddPost = async (values) => {
-    const addPostResponse = await postApi.addPost({
-      title: values.title,
-      content: values.content,
-      image: 'string',
-      preview_image: 'string',
-    });
-    if (addPostResponse?.status === 200) {
-      setPostsData({
-        data: [addPostResponse?.data, ...postsData.data],
-      });
-      toast.success('Post added successful!');
-    }
+  const handleAddPost = (values) => {
+    dispatch(addPost({ title: values.title, content: values.content }));
   };
 
   const initialValues = {
@@ -71,7 +57,7 @@ export const Posts = () => {
   return (
     <div className='flex-column'>
       <Formik onSubmit={handleAddPost} initialValues={initialValues}>
-        {({ values, handleChange, handleSubmit, isSubmitting }) => (
+        {({ values, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <AppField value={values.title} name='title' onInputChange={handleChange} />
             <AppField
@@ -81,8 +67,8 @@ export const Posts = () => {
             />
             <AppButton
               type='submit'
-              isDisabled={isSubmitting}
-              tittle={isSubmitting ? 'Loading...' : 'Add note'}
+              isDisabled={isAddPostLoading}
+              tittle={isAddPostLoading ? 'Loading...' : 'Add note'}
               width='150px'
             />
           </form>
@@ -96,13 +82,11 @@ export const Posts = () => {
           placeholder='Search posts...'
         />
       </div>
-      {isPostsDataloading ? (
-        <p>is Loading....</p>
-      ) : (
+      <RequestHandler isLoading={isGetPostsLoading}>
         <div>
-          <p>{` total items: ${postsData?.total_items}`}</p>
+          <p>{` total items: ${total_items}`}</p>
           <div>
-            {postsData?.data?.map((post) => {
+            {postsArray?.map((post) => {
               return (
                 <PostItem
                   onPostDeleteClick={handleDeletePost}
@@ -114,7 +98,7 @@ export const Posts = () => {
             })}
           </div>
         </div>
-      )}
+      </RequestHandler>
     </div>
   );
 };
