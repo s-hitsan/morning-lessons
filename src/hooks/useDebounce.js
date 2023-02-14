@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export const useDebounce = (initalValue) => {
-  const [debouncedValue, setDebouncedValue] = useState(initalValue);
+  const [searchParams, setSearhParams] = useSearchParams();
 
-  const [searchValue, setSearchValue] = useState(initalValue);
+  const handleInitilValue = searchParams.get('search') || initalValue;
+
+  const [debouncedValue, setDebouncedValue] = useState(handleInitilValue);
+
+  const [searchValue, setSearchValue] = useState(handleInitilValue);
 
   const handleSetSearchValue = (value) => {
-    return setSearchValue(typeof value === 'string' ? value : value.target.value);
+    const searhValue = typeof value === 'string' ? value : value.target.value;
+
+    setSearhParams({ search: searhValue });
+
+    return setSearchValue(searhValue);
   };
 
   useEffect(() => {

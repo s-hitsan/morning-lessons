@@ -7,11 +7,12 @@ import { useDebounce } from '../../hooks/useDebounce';
 import { useAddPostMutation, useGetPostsQuery } from '../../services/rtk-api';
 
 export const Posts = () => {
-  const { data: getPostsData, isLoading: isGetPostsLoading } = useGetPostsQuery();
+  const { searchValue, setSearchValue, debouncedValue } = useDebounce('');
+
+  const { data: getPostsData, isLoading: isGetPostsLoading } =
+    useGetPostsQuery(debouncedValue);
 
   const [addPost, { data, isLoading: isAddPostLoading }] = useAddPostMutation();
-
-  const { searchValue, setSearchValue, debouncedValue } = useDebounce('');
 
   const navigate = useNavigate();
 

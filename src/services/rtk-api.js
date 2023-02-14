@@ -5,8 +5,8 @@ export const postRtkApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://70.34.201.18:8080/' }),
   endpoints: (build) => ({
     getPosts: build.query({
-      query: () => ({
-        url: 'posts',
+      query: (searchValue = '') => ({
+        url: `posts?search=${searchValue}`,
         method: 'GET',
       }),
     }),
