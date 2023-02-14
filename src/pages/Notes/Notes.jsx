@@ -26,7 +26,7 @@ export const Notes = () => {
 
   const onNoteDeleteClick = (id) => dispatch(deleteNoteAction({ id }));
 
-  const handleInputChange = (e) => setInputValue(e.target.value);
+  const handleInputChange = (e) => setInputValue(e?.target?.value);
 
   return (
     <div
