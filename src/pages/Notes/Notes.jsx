@@ -2,17 +2,22 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AppButton, AppField, NoteItem } from '../../components';
+import { useDebounce } from '../../hooks/useDebounce';
 import {
   addNote as addNoteAction,
   deleteNote as deleteNoteAction,
+  setSearchString,
 } from '../../redux/notes-slice';
+import { selectNotesPage } from '../../redux/selectors';
 
 export const Notes = () => {
   const [inputValue, setInputValue] = useState('');
 
-  const { notes } = useSelector((state) => state.notesPage);
+  const { notes, searchString } = useSelector(selectNotesPage);
 
   const dispatch = useDispatch();
+
+  const setSearchValue = (e) => dispatch(setSearchString(e.target.value));
 
   const onNoteAddButtonClick = () => {
     dispatch(addNoteAction({ tittle: inputValue }));
@@ -33,15 +38,26 @@ export const Notes = () => {
       <div
         style={{
           display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           gap: '10px',
         }}
       >
-        <AppField value={inputValue} onInputChange={handleInputChange} />
-        <AppButton onClick={onNoteAddButtonClick} tittle='Add note' width='150px' />
+        <div>
+          <AppField value={inputValue} onInputChange={handleInputChange} />
+          <AppButton onClick={onNoteAddButtonClick} tittle='Add note' width='150px' />
+        </div>
+        <div>
+          <div className='divider' />
+          <AppField
+            value={searchString}
+            onInputChange={setSearchValue}
+            placeholder='Search posts...'
+          />
+        </div>
       </div>
-      <div style={{ width: '655px' }}>
+      <div>
         {notes?.map((note) => {
           return (
             <NoteItem

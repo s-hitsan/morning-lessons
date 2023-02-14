@@ -4,6 +4,7 @@ const initialState = {
   notes: [{ id: 0, isCheked: false, tittle: 'First' }],
   total_items: 1,
   notesLastId: 1,
+  searchString: '',
 };
 
 export const notesSlice = createSlice({
@@ -22,9 +23,12 @@ export const notesSlice = createSlice({
     deleteNote(state, action) {
       state.notes = state.notes.filter((note) => note.id !== action.payload.id);
     },
+    setSearchString(state, action) {
+      state.searchString = action.payload;
+    },
   },
 });
 
-export const { addNote, deleteNote } = notesSlice.actions;
+export const { addNote, deleteNote, setSearchString } = notesSlice.actions;
 
 export default notesSlice.reducer;
