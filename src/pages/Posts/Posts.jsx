@@ -31,8 +31,8 @@ export const Posts = () => {
     // }
   };
 
-  const handleAddPost = (values) => {
-    addPost({ title: values.title, content: values.content });
+  const handleAddPost = async (values) => {
+    await addPost({ title: values.title, content: values.content });
   };
 
   const initialValues = {

@@ -6,13 +6,13 @@ export const postRtkApi = createApi({
   endpoints: (build) => ({
     getPosts: build.query({
       query: (searchValue = '') => ({
-        url: `posts?search=${searchValue}`,
+        url: `posts${searchValue ? `?${(search = searchValue)}` : ''}`,
         method: 'GET',
       }),
     }),
     addPost: build.mutation({
       query: (arg) => ({
-        url: 'posts/',
+        url: 'post',
         method: 'POST',
         body: { ...arg, image: 'string', preview_image: 'string' },
       }),
