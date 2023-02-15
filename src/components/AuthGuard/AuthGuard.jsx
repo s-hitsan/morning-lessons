@@ -10,7 +10,6 @@ export const AuthGuard = ({ children }) => {
   const { pathname } = useLocation();
 
   if (!isLoggedIn && !(pathname === PATHS.register)) {
-    toast.error('Будь-ласка авторизуйтесь!');
     return <Navigate to={PATHS.register} />;
   }
 

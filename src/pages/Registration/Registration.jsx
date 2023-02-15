@@ -1,24 +1,32 @@
 import { Formik } from 'formik';
-import Rect, { Component, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { AppButton, AppField, AppModal } from '../../components';
+import { PATHS } from '../../constants';
 import { useUserContext } from '../../contexts/userContext';
+import { useCreateUserMutation } from '../../services/auth-api';
+import { getErrorText } from '../../utils';
+import { registrationSchema } from './registrationSchema';
 
 export const Registration = () => {
-  const [isModalShow, setIsModalShow] = useState();
+  const [createUser, { error }] = useCreateUserMutation();
 
-  const { logIn } = useUserContext();
+  const navigate = useNavigate();
 
   const formValues = {
     email: '',
-    login: '',
+    first_name: '',
+    last_name: '',
     password: '',
-    modalInputValue: '',
   };
 
-  const onSubmit = async (event) => {
-    await logIn();
+  const onSubmit = async (values) => {
+    const resp = await createUser(values);
+    if (!resp?.error) {
+      toast.success('Account created successful!');
+      navigate(PATHS.login, { replace: true });
+    }
   };
 
   return (
@@ -32,28 +40,47 @@ export const Registration = () => {
       }}
     >
       <h1>Create account</h1>
-      <Formik initialValues={formValues} onSubmit={onSubmit}>
-        {({ handleSubmit, handleChange, values, isSubmitting }) => (
+      <Formik
+        validationSchema={registrationSchema}
+        initialValues={formValues}
+        onSubmit={onSubmit}
+      >
+        {({ handleSubmit, handleChange, values, isSubmitting, errors }) => (
           <form autoComplete='none' onSubmit={handleSubmit}>
             <AppField
               label='Email'
+              errorMessage={errors?.email}
               value={values.email}
               onInputChange={handleChange}
               name='email'
             />
             <AppField
-              label='Login'
+              label='First name'
+              errorMessage={errors?.first_name}
               value={values.login}
               onInputChange={handleChange}
-              name='login'
+              name='first_name'
+            />
+            <AppField
+              label='Last name'
+              value={values.last_name}
+              errorMessage={errors?.last_name}
+              onInputChange={handleChange}
+              name='last_name'
             />
             <AppField
               label='Password'
               value={values.password}
+              errorMessage={errors?.password}
               onInputChange={handleChange}
               name='password'
               type='password'
             />
+            <div>
+              <p>
+                Already have account? Go to <Link to={PATHS.login}>Login</Link>
+              </p>
+            </div>
             <AppButton
               type='submit'
               tittle={isSubmitting ? 'Loading...' : 'Registartion'}
@@ -61,14 +88,7 @@ export const Registration = () => {
           </form>
         )}
       </Formik>
-      {/* {isModalShow ? (
-        <AppModal
-          isShow={isModalShow}
-          inputValue={formValues.modalInputValue}
-          onInputChange={handleChange}
-          onHide={setModalHide}
-        />
-      ) : null} */}
+      {error ? <p className='text-danger'>{getErrorText(error) + '!'}</p> : null}
       <Outlet />
     </div>
   );

@@ -11,11 +11,14 @@ export const AppField = ({
   width = '488px',
   name,
   placeholder = 'Enter value',
+  errorMessage,
 }) => {
   const element = useRef({});
 
   return (
-    <div className='app__field_wrapper'>
+    <div
+      className={errorMessage ? 'app__field_wrapper error__field' : 'app__field_wrapper'}
+    >
       {label ? (
         <label title='hello'>
           <p>{label}</p>
@@ -31,10 +34,12 @@ export const AppField = ({
         onChange={onInputChange}
         placeholder={placeholder}
       />
+      {errorMessage ? <p className='field__error_mesage'>{errorMessage}</p> : null}
     </div>
   );
 };
 
 AppField.propTypes = {
   label: PropTypes.string,
+  errorMessage: PropTypes.string,
 };

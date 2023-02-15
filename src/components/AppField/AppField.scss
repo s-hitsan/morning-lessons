@@ -15,3 +15,16 @@
     }
 
 }
+
+.error__field {
+
+    input {
+        border: 1px solid red;
+    }
+
+    .field__error_mesage {
+        display: flex;
+        color: red;
+        margin-bottom: 0 !important;
+    }
+}

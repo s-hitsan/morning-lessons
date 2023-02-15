@@ -7,10 +7,7 @@ import { useUserContext } from '../../contexts/userContext';
 export const NoAuthGuard = ({ children }) => {
   const { isLoggedIn } = useUserContext();
 
-  const { pathname } = useLocation();
-
-  if (isLoggedIn && pathname === PATHS.register) {
-    toast.success('Ви вже авторизовані!');
+  if (isLoggedIn) {
     return <Navigate to={PATHS.posts} />;
   }
 

@@ -12,7 +12,7 @@ export const postRtkApi = createApi({
     }),
     addPost: build.mutation({
       query: (arg) => ({
-        url: 'post',
+        url: 'posts',
         method: 'POST',
         body: { ...arg, image: 'string', preview_image: 'string' },
       }),

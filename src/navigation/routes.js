@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 
 import { AuthGuard, NoAuthGuard } from '../components';
 import { PATHS } from '../constants';
-import { MyPage, Notes, Posts, Registration } from '../pages';
+import { Login, MyPage, Notes, Posts, Registration } from '../pages';
 
 const LazyPost = lazy(() => import('../pages/Post/Post'));
 
@@ -17,6 +17,12 @@ export const pagesArray = [
       <Registration />
     </NoAuthGuard>,
     [{ path: 'hi', element: <div>inner page</div> }],
+  ),
+  routeConstructor(
+    PATHS.login,
+    <NoAuthGuard>
+      <Login />
+    </NoAuthGuard>,
   ),
   routeConstructor(
     PATHS.notes,

@@ -1,7 +1,9 @@
 import { ClassNames, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
 
+import { useUserContext } from '../../contexts/userContext';
 import { NavMenu } from '../NavMenu/NavMenu';
 
 const StyledDiv = styled.div`
@@ -12,6 +14,7 @@ const StyledDiv = styled.div`
 `;
 
 export const MainLayout = ({ children }) => {
+  const { logOut } = useUserContext();
   return (
     <div
       style={{
@@ -24,6 +27,9 @@ export const MainLayout = ({ children }) => {
     >
       <NavMenu />
       <StyledDiv>{children}</StyledDiv>
+      <Button className='m-4' onClick={logOut}>
+        Logout
+      </Button>
     </div>
   );
 };
